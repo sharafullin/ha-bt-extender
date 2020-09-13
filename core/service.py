@@ -9,7 +9,7 @@ origin.pull()
 
 remoteRepo = Repo("/opt/ha-bt-extender-remote")
 
-while true:
+while True:
     remoteOrigin = remoteRepo.remotes.origin
     remoteOrigin.pull()
     if repo.active_branch.commit.hexsha != remoteRepo.active_branch.commit.hexsha:
