@@ -10,9 +10,6 @@ remoteRepo = Repo("/opt/ha-bt-extender-remote")
 
 os.system('pip3 install -r /opt/ha-bt-extender/requirements.txt')
 
-devices = []
-q = Queue()
-
 while True:
     remoteOrigin = remoteRepo.remotes.origin
     remoteOrigin.pull()
