@@ -1,4 +1,4 @@
-sudo cat <<EOT >> /lib/systemd/system/temperature.service
+sudo cat <<EOT >> /lib/systemd/system/ha-bt-extender-core.service
 [Unit]
 Description=service
 After=multi-user.target
