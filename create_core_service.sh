@@ -1,11 +1,11 @@
-cat <<EOT >> ha-bt-extender-core.service
+sudo cat <<EOT >> /lib/systemd/system/temperature.service
 [Unit]
 Description=service
 After=multi-user.target
 
 [Service]
 Type=idle
-ExecStart=/usr/bin/sudo /usr/bin/sudo python3 /home/ha-bt-extender/core.py
+ExecStart=/usr/bin/sudo /usr/bin/sudo python3 /opt/ha-bt-extender/core/service.py
 
 [Install]
 WantedBy=multi-user.target
