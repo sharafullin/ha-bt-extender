@@ -1,1 +1,4 @@
 GitPython
+netifaces
+bluepy
+paho-mqtt
