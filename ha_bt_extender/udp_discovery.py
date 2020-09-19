@@ -1,6 +1,8 @@
 import socket
 
 def start_udp_discovery():
+    print("started udp discovery")
+
     client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # UDP
 
     # Enable port reusage so we will be able to run multiple clients and servers on single (host, port).

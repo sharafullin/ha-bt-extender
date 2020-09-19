@@ -22,3 +22,5 @@ while True:
         os.system('reboot')
     
     time.sleep(60)
+
+internal_process.join()
