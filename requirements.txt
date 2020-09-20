@@ -2,3 +2,4 @@ GitPython
 netifaces
 bluepy
 paho-mqtt
+eq3bt
