@@ -1,6 +1,6 @@
 import time, git, os
 from git import Repo
-from multiprocessing import Process
+from multiprocessing import Process, Queue
 import internal_process
 
 
@@ -12,7 +12,9 @@ remoteRepo = Repo("/opt/ha-bt-extender-remote")
 
 os.system('pip3 install -r /opt/ha-bt-extender/requirements.txt')
 
-internal_process = Process(target=internal_process.start)
+logger = Queue()
+
+internal_process = Process(target=internal_process.start, args=(logger,))
 internal_process.start()
 
 while True:
@@ -21,6 +23,9 @@ while True:
     if repo.active_branch.commit.hexsha != remoteRepo.active_branch.commit.hexsha:
         os.system('reboot')
     
+    while logger.full():
+        print(logger.get())
+        
     time.sleep(60)
 
 internal_process.join()

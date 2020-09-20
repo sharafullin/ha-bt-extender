@@ -1,7 +1,8 @@
 import socket
+from multiprocessing import Queue
 
-def start_udp_discovery():
-    print("started udp discovery")
+def start_udp_discovery(logger: Queue):
+    logger.put("started udp discovery")
 
     client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # UDP
 
@@ -16,14 +17,14 @@ def start_udp_discovery():
     client.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
     client.bind(("", 35224))
-    print("started")
+    logger.put("started")
     while True:
         print("listening")
         # Thanks @seym45 for a fix
         data, addr = client.recvfrom(1024)
-        print("data received")
-        print(data)
-        print(addr)
+        logger.put("data received")
+        logger.put(data)
+        logger.put(addr)
         if data == b"ha-rpi-bt-ext discovery":
             #reply
             client.sendto(b"ha-rpi-bt-ext discovered", (addr[0], 35224))

@@ -9,7 +9,7 @@ from multiprocessing import Queue
 PORT = 35224
 devices = []
 
-def start_tcp_discovery(queue: Queue):
+def start_tcp_discovery(logger: Queue, queue: Queue):
     ip = ni.ifaddresses('wlan0')[ni.AF_INET][0]['addr']
 
     # Create a TCP/IP socket
@@ -17,7 +17,7 @@ def start_tcp_discovery(queue: Queue):
 
     # Bind the socket to the port
     server_address = (ip, PORT)
-    print("starting up on %s port %s" % server_address)
+    logger.put("starting up on %s port %s" % server_address)
     sock.bind(server_address)
 
     # Listen for incoming connections
@@ -27,17 +27,17 @@ def start_tcp_discovery(queue: Queue):
 
     while True:
         # Wait for a connection
-        print("waiting for a connection")
+        logger.put("waiting for a connection")
         connection, client_address = sock.accept()
 
         try:
-            print("connection from", client_address)
+            logger.put("connection from", client_address)
 
             # Receive the data in small chunks and retransmit it
             while True:
                 data = connection.recv(1024)
                 resp = ""
-                print("received '%s'" % data)
+                logger.put("received '%s'" % data)
                 msg = data.decode()
                 if msg == 'ha-rpi-bt-ext device discovery':
                     devices = scanner.scan(10.0)
@@ -54,15 +54,15 @@ def start_tcp_discovery(queue: Queue):
                         #         break
                         # if eq3:
                         #     resp += dev.addr + ":" + str(dev.rssi) + ";"
-                    print("sending data back to the client")
-                    print("data:", resp[:-1])
+                    logger.put("sending data back to the client")
+                    logger.put("data:", resp[:-1])
                     connection.sendall((resp[:-1]).encode())
                     queue.put("")
                 elif msg.startswith('ha-rpi-bt-ext device configure:'):
                     queue.put(msg[msg.index(":") + 1:])
                     connection.sendall(b'ha-rpi-bt-ext device configured')
                 else:
-                    print("no more data from", client_address)
+                    logger.put("no more data from", client_address)
                     break
         except ConnectionResetError:
             continue
