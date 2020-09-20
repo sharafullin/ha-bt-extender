@@ -12,6 +12,8 @@ remoteRepo = Repo("/opt/ha-bt-extender-remote")
 
 os.system('pip3 install -r /opt/ha-bt-extender/requirements.txt')
 
+os.system('systemctl start ha-bt-extender-internal')
+
 logger = Queue()
 
 internal_process = Process(target=internal_process.start, args=(logger,))
@@ -25,7 +27,7 @@ while True:
     
     while logger.full():
         print(logger.get())
-        
+
     time.sleep(60)
 
 internal_process.join()
