@@ -1,8 +1,6 @@
 import time, git, os
 from git import Repo
 from multiprocessing import Process, Queue
-import internal_process
-
 
 repo = Repo("/opt/ha-bt-extender")
 origin = repo.remotes.origin
@@ -16,9 +14,6 @@ os.system('systemctl start ha-bt-extender-internal')
 
 logger = Queue()
 
-internal_process = Process(target=internal_process.start, args=(logger,))
-internal_process.start()
-
 while True:
     remoteOrigin = remoteRepo.remotes.origin
     remoteOrigin.pull()
@@ -29,5 +24,3 @@ while True:
         print(logger.get())
 
     time.sleep(60)
-
-internal_process.join()
