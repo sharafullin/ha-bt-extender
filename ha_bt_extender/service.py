@@ -10,6 +10,9 @@ remoteRepo = Repo("/opt/ha-bt-extender-remote")
 
 os.system('pip3 install -r /opt/ha-bt-extender/requirements.txt')
 
+os.system('pip3 show python-eq3bt')
+os.system('pip3 show bluepy')
+
 os.system('systemctl start ha-bt-extender-internal')
 
 logger = Queue()
