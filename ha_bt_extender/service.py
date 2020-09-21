@@ -3,15 +3,10 @@ from git import Repo
 from multiprocessing import Process, Queue
 
 repo = Repo("/opt/ha-bt-extender")
-origin = repo.remotes.origin
-origin.pull()
 
 remoteRepo = Repo("/opt/ha-bt-extender-remote")
 
-os.system('pip3 install -r /opt/ha-bt-extender/requirements.txt')
-
-os.system('pip3 show python-eq3bt')
-os.system('pip3 show bluepy')
+os.system('python3.7 -m pip install -r /opt/ha-bt-extender/requirements.txt')
 
 os.system('systemctl start ha-bt-extender-internal')
 
@@ -21,6 +16,8 @@ while True:
     remoteOrigin = remoteRepo.remotes.origin
     remoteOrigin.pull()
     if repo.active_branch.commit.hexsha != remoteRepo.active_branch.commit.hexsha:
+        origin = repo.remotes.origin
+        origin.pull()
         os.system('reboot')
     
     while logger.full():
