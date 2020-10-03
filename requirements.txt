@@ -3,3 +3,4 @@ netifaces
 bluepy
 paho-mqtt
 python-eq3bt
+voluptuous
