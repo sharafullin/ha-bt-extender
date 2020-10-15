@@ -31,7 +31,7 @@ def start_tcp_discovery(logger: Queue, queue: Queue):
         connection, client_address = sock.accept()
 
         try:
-            logger.put("connection from", client_address)
+            logger.put("connection from %s" % client_address)
 
             # Receive the data in small chunks and retransmit it
             while True:
@@ -55,14 +55,14 @@ def start_tcp_discovery(logger: Queue, queue: Queue):
                         # if eq3:
                         #     resp += dev.addr + ":" + str(dev.rssi) + ";"
                     logger.put("sending data back to the client")
-                    logger.put("data:", resp[:-1])
+                    logger.put("data: %s" % resp[:-1])
                     connection.sendall((resp[:-1]).encode())
                     queue.put("")
                 elif msg.startswith('ha-rpi-bt-ext device configure:'):
                     queue.put(msg[msg.index(":") + 1:])
                     connection.sendall(b'ha-rpi-bt-ext device configured')
                 else:
-                    logger.put("no more data from", client_address)
+                    logger.put("no more data from %s" % client_address)
                     break
         except ConnectionResetError:
             continue
