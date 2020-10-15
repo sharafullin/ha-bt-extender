@@ -7,7 +7,10 @@ logger = Queue()
 q = Queue()
 
 def heartbeat():
-    logger.put(time.time(), "heartbeat")
+    print(time.time(), "heartbeat")
+    while not logger.empty():
+        data = logger.get(timeout=0.5)
+        print("log: ", data)
 
 s = sched.scheduler(time.time, time.sleep)
 s.enter(30, 1, heartbeat)
