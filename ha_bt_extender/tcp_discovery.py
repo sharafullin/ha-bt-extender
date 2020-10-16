@@ -31,7 +31,7 @@ def start_tcp_discovery(logger: Queue, queue: Queue):
         connection, client_address = sock.accept()
 
         try:
-            logger.put("connection from %s" client_address[0])
+            logger.put("connection from %s" % client_address[0])
 
             # Receive the data in small chunks and retransmit it
             while True:
