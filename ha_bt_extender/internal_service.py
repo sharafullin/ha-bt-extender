@@ -10,7 +10,7 @@ q = Queue()
 logging.info("Service started")
 
 def heartbeat():
-    print(time.time(), "heartbeat")
+    logging.info("heartbeat")
     while not logger.empty():
         data = logger.get(timeout=0.5)
         logging.info(data)
