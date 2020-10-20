@@ -14,7 +14,7 @@ def heartbeat():
     while not logger.empty():
         data = logger.get(timeout=0.5)
         logging.info(data)
-
+    s.enter(30, 1, heartbeat)
 
 s = sched.scheduler(time.time, time.sleep)
 s.enter(30, 1, heartbeat)

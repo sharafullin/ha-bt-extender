@@ -40,6 +40,7 @@ def start_tcp_discovery(logger: Queue, queue: Queue):
                 logger.put("received '%s'" % data)
                 msg = data.decode()
                 if msg == 'ha-rpi-bt-ext device discovery':
+                    logger.put("device discovery '%s'" % msg)
                     devices = scanner.scan(10.0)
 
                     for dev in devices:
@@ -59,6 +60,7 @@ def start_tcp_discovery(logger: Queue, queue: Queue):
                     connection.sendall((resp[:-1]).encode())
                     queue.put("")
                 elif msg.startswith('ha-rpi-bt-ext device configure:'):
+                    logger.put("device configure '%s'" % msg)
                     queue.put(msg[msg.index(":") + 1:])
                     connection.sendall(b'ha-rpi-bt-ext device configured')
                 else:
