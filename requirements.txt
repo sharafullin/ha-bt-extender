@@ -5,3 +5,4 @@ paho-mqtt
 python-eq3bt
 voluptuous
 homeassistant
+sqlite3
