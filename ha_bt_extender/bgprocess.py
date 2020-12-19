@@ -20,7 +20,7 @@ def heartbeat():
 
     while not q.empty():
         data = q.get(timeout=0.5)
-        print("data: ", data)
+        print("HB data: ", data)
         if data == "":
             devices.clear()
         else:
