@@ -5,9 +5,10 @@ import tcp_discovery
 import sqlite3
 from collections import namedtuple
 
-DB_NAME = "hassio"
-SQL_FILE_NAME = "schema.sql"
+DB_NAME = "/opt/ha-bt-extender-data/db"
+SQL_FILE_NAME = "/opt/ha-bt-extender/ha_bt_extender/schema.sql"
 schema=""
+print(SQL_FILE_NAME)
 with open(SQL_FILE_NAME, 'r') as schema_file:
     schema=schema_file.read().replace('\n', '')
 conn = sqlite3.connect(DB_NAME)
